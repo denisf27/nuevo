@@ -1,0 +1,576 @@
+!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dibujo con Efectos Especiales</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #ffd1dc;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            animation: cambiarFondo 8s ease-in-out infinite;
+        }
+
+        @keyframes cambiarFondo {
+            0%, 100% {
+                background: #ffd1dc;
+            }
+            25% {
+                background: #ffe8f0;
+            }
+            50% {
+                background: #ffb6c1;
+            }
+            75% {
+                background: #ffc0cb;
+            }
+        }
+
+        .dibujo-container {
+            position: relative;
+            width: 600px;
+            height: 700px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        .personaje {
+            position: relative;
+            width: 150px;
+            height: 180px;
+            background: #fff;
+            border-radius: 75px 75px 50px 50px;
+            margin-bottom: 40px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            animation: flotarPersonaje 4s ease-in-out infinite;
+            z-index: 10;
+        }
+
+        @keyframes flotarPersonaje {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-15px) rotate(1deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(0deg);
+            }
+            75% {
+                transform: translateY(-10px) rotate(-1deg);
+            }
+        }
+
+        .ojos {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 25px;
+        }
+
+        .ojo {
+            width: 25px;
+            height: 25px;
+            background: #000;
+            border-radius: 50%;
+            position: relative;
+            animation: parpadear 3s ease-in-out infinite;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .pupila {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            width: 10px;
+            height: 10px;
+            background: #fff;
+            border-radius: 50%;
+            animation: moverPupila 5s ease-in-out infinite;
+        }
+
+        @keyframes parpadear {
+            0%, 85%, 100% {
+                transform: scaleY(1);
+            }
+            90%, 95% {
+                transform: scaleY(0.1);
+            }
+        }
+
+        @keyframes moverPupila {
+            0%, 100% {
+                transform: translate(0, 0);
+            }
+            25% {
+                transform: translate(2px, -1px);
+            }
+            50% {
+                transform: translate(-1px, 1px);
+            }
+            75% {
+                transform: translate(1px, 2px);
+            }
+        }
+
+        .boca {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 20px;
+            border: 4px solid #000;
+            border-top: none;
+            border-radius: 0 0 40px 40px;
+            animation: sonreir 2s ease-in-out infinite;
+        }
+
+        @keyframes sonreir {
+            0%, 100% {
+                transform: translateX(-50%) scale(1);
+            }
+            50% {
+                transform: translateX(-50%) scale(1.15);
+            }
+        }
+
+        .manos {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+        }
+
+        .mano {
+            width: 15px;
+            height: 15px;
+            background: #000;
+            border-radius: 50%;
+            animation: moverManos 2s ease-in-out infinite;
+            box-shadow: 0 0 8px rgba(0,0,0,0.3);
+        }
+
+        @keyframes moverManos {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-8px) scale(1.1);
+            }
+        }
+
+        .corazon-flotante {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            width: 35px;
+            height: 35px;
+            background: #8B4513;
+            border-radius: 50%;
+            animation: latirCorazon 1.2s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(139, 69, 19, 0.6);
+            z-index: 15;
+        }
+
+        .corazon-flotante::before,
+        .corazon-flotante::after {
+            content: '';
+            position: absolute;
+            width: 17px;
+            height: 25px;
+            background: #8B4513;
+            border-radius: 17px 17px 0 0;
+        }
+
+        .corazon-flotante::before {
+            left: 17px;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+
+        .corazon-flotante::after {
+            left: 0;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+
+        @keyframes latirCorazon {
+            0%, 100% {
+                transform: scale(1) rotate(0deg);
+            }
+            25% {
+                transform: scale(1.3) rotate(5deg);
+            }
+            50% {
+                transform: scale(1.1) rotate(0deg);
+            }
+            75% {
+                transform: scale(1.2) rotate(-5deg);
+            }
+        }
+
+        .texto-romantico {
+            text-align: center;
+            color: #000;
+            font-size: 22px;
+            line-height: 1.8;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            animation: aparecerTexto 3s ease-in-out;
+            z-index: 10;
+        }
+
+        @keyframes aparecerTexto {
+            0% {
+                opacity: 0;
+                transform: translateY(30px) scale(0.8);
+            }
+            50% {
+                opacity: 0.7;
+                transform: translateY(15px) scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .efectos-fondo {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .estrella {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #fff;
+            border-radius: 50%;
+            animation: brillarEstrella 4s ease-in-out infinite;
+            box-shadow: 0 0 10px rgba(255,255,255,0.8);
+        }
+
+        @keyframes brillarEstrella {
+            0%, 100% {
+                opacity: 0.3;
+                transform: scale(1) rotate(0deg);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.5) rotate(180deg);
+            }
+        }
+
+        .estrella-1 { top: 10%; left: 15%; animation-delay: 0s; }
+        .estrella-2 { top: 20%; right: 20%; animation-delay: 1s; }
+        .estrella-3 { bottom: 15%; left: 25%; animation-delay: 2s; }
+        .estrella-4 { bottom: 25%; right: 15%; animation-delay: 3s; }
+        .estrella-5 { top: 60%; left: 10%; animation-delay: 0.5s; }
+        .estrella-6 { top: 70%; right: 10%; animation-delay: 1.5s; }
+
+        .particula-romantica {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            border-radius: 50%;
+            animation: flotarParticula 6s ease-in-out infinite;
+            box-shadow: 0 0 15px rgba(255, 107, 107, 0.6);
+        }
+
+        @keyframes flotarParticula {
+            0%, 100% {
+                transform: translateY(0) scale(1) rotate(0deg);
+                opacity: 0.6;
+            }
+            25% {
+                transform: translateY(-25px) scale(1.2) rotate(90deg);
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(-40px) scale(0.8) rotate(180deg);
+                opacity: 0.8;
+            }
+            75% {
+                transform: translateY(-15px) scale(1.1) rotate(270deg);
+                opacity: 1;
+            }
+        }
+
+        .particula-1 { top: 5%; left: 20%; animation-delay: 0s; }
+        .particula-2 { top: 15%; right: 25%; animation-delay: 2s; }
+        .particula-3 { bottom: 10%; left: 30%; animation-delay: 4s; }
+        .particula-4 { bottom: 20%; right: 25%; animation-delay: 1s; }
+        .particula-5 { top: 55%; left: 15%; animation-delay: 3s; }
+        .particula-6 { top: 65%; right: 15%; animation-delay: 5s; }
+
+        .onda-romantica {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: linear-gradient(45deg, rgba(255, 107, 107, 0.2), rgba(255, 142, 142, 0.2));
+            animation: ondular 5s ease-in-out infinite;
+            border-radius: 50% 50% 0 0;
+        }
+
+        @keyframes ondular {
+            0%, 100% {
+                transform: translateY(0) scaleY(1);
+            }
+            50% {
+                transform: translateY(-30px) scaleY(1.3);
+            }
+        }
+
+        .brillo-especial {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 60%);
+            pointer-events: none;
+            animation: brillar 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes brillar {
+            0% {
+                opacity: 0.2;
+            }
+            100% {
+                opacity: 0.6;
+            }
+        }
+
+        .efecto-resplandor {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255, 107, 107, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: resplandor 6s ease-in-out infinite;
+        }
+
+        @keyframes resplandor {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.5);
+                opacity: 0.7;
+            }
+        }
+
+        .nombre-denis {
+            position: relative;
+            font-size: 28px;
+            font-weight: bold;
+            color: #ff4757;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: aparecerNombre 2s ease-in-out;
+            margin-top: 15px;
+            z-index: 20;
+        }
+
+        @keyframes aparecerNombre {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            50% {
+                opacity: 0.7;
+                transform: scale(1.1);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .denis-fondo {
+            position: absolute;
+            font-size: 120px;
+            font-weight: bold;
+            color: rgba(139, 69, 19, 0.1);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            animation: rotarDenis 15s linear infinite;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes rotarDenis {
+            0% {
+                transform: translate(-50%, -50%) rotate(0deg);
+            }
+            100% {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        .denis-pattern {
+            position: absolute;
+            font-size: 40px;
+            font-weight: bold;
+            color: rgba(139, 69, 19, 0.15);
+            animation: flotarDenis 8s ease-in-out infinite;
+        }
+
+        @keyframes flotarDenis {
+            0%, 100% {
+                opacity: 0.15;
+                transform: scale(0.8) rotate(-5deg);
+            }
+            50% {
+                opacity: 0.3;
+                transform: scale(1.1) rotate(5deg);
+            }
+        }
+
+        .denis-1 { top: 15%; left: 20%; animation-delay: 0s; }
+        .denis-2 { top: 25%; right: 15%; animation-delay: 2s; }
+        .denis-3 { bottom: 20%; left: 25%; animation-delay: 4s; }
+        .denis-4 { bottom: 30%; right: 20%; animation-delay: 6s; }
+    </style>
+</head>
+<body>
+    <div class="dibujo-container">
+        <div class="denis-fondo">DENIS</div>
+        <div class="denis-pattern denis-1">DENIS</div>
+        <div class="denis-pattern denis-2">DENIS</div>
+        <div class="denis-pattern denis-3">DENIS</div>
+        <div class="denis-pattern denis-4">DENIS</div>
+        <div class="brillo-especial"></div>
+        <div class="efecto-resplandor"></div>
+        <div class="onda-romantica"></div>
+        
+        <div class="efectos-fondo">
+            <div class="estrella estrella-1"></div>
+            <div class="estrella estrella-2"></div>
+            <div class="estrella estrella-3"></div>
+            <div class="estrella estrella-4"></div>
+            <div class="estrella estrella-5"></div>
+            <div class="estrella estrella-6"></div>
+            
+            <div class="particula-romantica particula-1"></div>
+            <div class="particula-romantica particula-2"></div>
+            <div class="particula-romantica particula-3"></div>
+            <div class="particula-romantica particula-4"></div>
+            <div class="particula-romantica particula-5"></div>
+            <div class="particula-romantica particula-6"></div>
+        </div>
+
+        <div class="personaje">
+            <div class="corazon-flotante"></div>
+            <div class="ojos">
+                <div class="ojo">
+                    <div class="pupila"></div>
+                </div>
+                <div class="ojo">
+                    <div class="pupila"></div>
+                </div>
+            </div>
+            <div class="boca"></div>
+            <div class="manos">
+                <div class="mano"></div>
+                <div class="mano"></div>
+            </div>
+        </div>
+
+        <div class="texto-romantico">
+            Para :<br>
+            Medaly Fernandez Tapia<br>
+            DE: Denis Fernandez Menor.
+        </div>
+        <div class="nombre-denis">De: DENIS</div>
+    </div>
+
+    <script>
+        // Efecto de partículas dinámicas
+        function crearParticulasDinamicas() {
+            const particulas = document.createElement('div');
+            particulas.style.position = 'fixed';
+            particulas.style.top = '0';
+            particulas.style.left = '0';
+            particulas.style.width = '100%';
+            particulas.style.height = '100%';
+            particulas.style.pointerEvents = 'none';
+            particulas.style.zIndex = '1000';
+
+            for (let i = 0; i < 25; i++) {
+                const particula = document.createElement('div');
+                particula.style.position = 'absolute';
+                particula.style.width = '10px';
+                particula.style.height = '10px';
+                particula.style.background = `hsl(${Math.random() * 360}, 70%, 60%)`;
+                particula.style.borderRadius = '50%';
+                particula.style.left = Math.random() * 100 + '%';
+                particula.style.top = Math.random() * 100 + '%';
+                particula.style.animation = `flotarParticula ${4 + Math.random() * 4}s ease-in-out infinite`;
+                particula.style.animationDelay = Math.random() * 4 + 's';
+                particula.style.boxShadow = `0 0 15px hsl(${Math.random() * 360}, 70%, 60%)`;
+                particulas.appendChild(particula);
+            }
+
+            document.body.appendChild(particulas);
+
+            setTimeout(() => {
+                document.body.removeChild(particulas);
+            }, 6000);
+        }
+
+        // Crear partículas cada 4 segundos
+        setInterval(crearParticulasDinamicas, 4000);
+
+        // Efecto de entrada especial
+        setTimeout(() => {
+            document.querySelector('.dibujo-container').style.opacity = '1';
+            document.querySelector('.dibujo-container').style.transform = 'scale(1)';
+        }, 500);
+
+        // Efecto de interacción con el personaje
+        document.querySelector('.personaje').addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.1) rotate(5deg)';
+            this.style.transition = 'transform 0.3s ease';
+        });
+
+        document.querySelector('.personaje').addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1) rotate(0deg)';
+        });
+
+        // Efecto de brillo en el corazón al hacer clic
+        document.querySelector('.corazon-flotante').addEventListener('click', function() {
+            this.style.boxShadow = '0 0 40px rgba(139, 69, 19, 1)';
+            setTimeout(() => {
+                this.style.boxShadow = '0 0 20px rgba(139, 69, 19, 0.6)';
+            }, 500);
+        });
+    </script>
+</body>
+</html> 
